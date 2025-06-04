@@ -1,0 +1,29 @@
+[
+    {
+        "id": 1,
+        "name": "Mojito",
+        "price": 19.99,
+        "stock": 100,
+        "category": "clasico",
+        "img": "https://images.unsplash.com/photo-1668533889350-21a05111310b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8bW9qaXRvfGVufDB8fDB8fHww",
+        "description": "Un clásico refrescante con ron, menta y lima."
+        },
+        {"id": 2,
+        "name": "Margarita",
+        "price": 17.99,
+        "stock": 50,
+        "category": "clasico",
+        "img": "https://plus.unsplash.com/premium_photo-1678481246021-25167a9599f6?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8TWFyZ2FyaXRhJTIwYmViaWRhfGVufDB8fDB8fHww",
+        "description": "Una mezcla perfecta de tequila, limón y sal."
+        },
+        {"id": 3,
+        "name": "Piña Colada",
+        "price": 18.99,
+        "stock": 75,
+        "category": "clasico",
+        "img": "https://images.unsplash.com/photo-1607644536940-6c300b5784c5?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8UGklQzMlQjFhJTIwQ29sYWRhfGVufDB8fDB8fHww",
+        "description": "Un clásico tropical con piña y coco."
+        
+        }
+
+]
