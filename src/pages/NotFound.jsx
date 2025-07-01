@@ -6,7 +6,7 @@ const NotFound = () => {
     <div>
         <h1>Página No Encontrada</h1>
         <p>Lo sentimos, la página que estás buscando no existe.</p>
-        <p>Por favor, verifica la URL o regresa a la <a href="/">página de inicio</a>.</p>
+        <p>Por favor, verifica la URL o regresa a la <Link to="/">página de inicio</Link>.</p>
         <button><Link to="/">Volver a Inicio</Link></button>
     </div>
   )

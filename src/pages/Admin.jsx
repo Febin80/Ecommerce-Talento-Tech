@@ -1,7 +1,98 @@
-import React from 'react'
+import React, { useContext } from "react";
+import FormularioProducto from "../components/admin/FormularioProducto";
+import FormularioEdicion from "../components/admin/FormularioEdicion";
+import { AuthContext } from "../context/AuthContext";
+import { AdminContext } from "../context/AdminContext";
+import { useNavigate } from "react-router-dom";
 
 const Admin = () => {
-    return <h1>Panel de Admin</h1>;
-}
+  const { logout } = useContext(AuthContext);
+  const {
+    productos = [],
+    loading,
+    open,
+    setOpen,
+    openEditor,
+    setOpenEditor,
+    seleccionado,
+    setSeleccionado,
+    agregarProducto,
+    actulizarProducto,
+    eliminarProducto,
+  } = useContext(AdminContext);
 
-export default Admin
+  const navigate = useNavigate();
+
+  return (
+    <div className="container">
+      {loading ? (
+        <p>Cargando...</p>
+      ) : (
+        <>
+          <nav>
+            <ul className="nav">
+              <li className="navItem">
+                <button
+                  className="navButton"
+                  onClick={() => {
+                    logout();
+                    navigate("/");
+                  }}
+                >
+                  <i className="fa-solid fa-right-from-bracket"></i>
+                </button>
+              </li>
+              <li className="navItem">
+                <a href="/admin">Admin</a>
+              </li>
+            </ul>
+          </nav>
+          <h1 className="title">Panel Administrativo</h1>
+
+          <ul className="list">
+            {productos.map((product) => (
+              <li key={product.id} className="listItem">
+                <img
+                  src={product.img}
+                  alt={product.name}
+                  className="listItemImage"
+                />
+                <span>{product.name}</span>
+                <span>${product.precio}</span>
+                <div>
+                  <button
+                    className="editButton"
+                    onClick={() => {
+                      setOpenEditor(true);
+                      setSeleccionado(product);
+                    }}
+                  >
+                    Editar
+                  </button>
+
+                  <button
+                    className="deleteButton"
+                    onClick={() => eliminarProducto(product.id)}
+                  >
+                    Eliminar
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+      <button onClick={() => setOpen(true)}>Agregar producto nuevo</button>
+      {open && <FormularioProducto onAgregar={agregarProducto} />}
+      {openEditor && (
+        <FormularioEdicion
+          productoSeleccionado={seleccionado}
+          onActualizar={actulizarProducto}
+        />
+      )}
+    </div>
+  );
+};
+
+export default Admin;
+

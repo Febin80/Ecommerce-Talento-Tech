@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import './App.css'
-import { BrowserRouter as Router ,Routes , Route} from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import AcercaDe from './pages/AcercaDe'
 import GaleriaDeProductos from './pages/GaleriaDeProductos'
@@ -11,50 +11,32 @@ import DetallesProductos from './components/DetallesProductos'
 import Login from './pages/Login'
 import RutasProtegidas from './auth/RutasProtegidas'
 import Admin from './pages/Admin'
-import { CartContext } from './context/CartContext'
-
+import { AuthContext } from './context/AuthContext'
+import { AdminProvider } from './context/AdminContext'
 
 function App() {
-  const { cart, handleAddToCart, handleDeleteFromCart, increase, decrease, productos, cargando, isAuthenticated } = useContext(CartContext);
+  const { isAuthenticated } = useContext(AuthContext);
 
   return (
-    <Router>
-      <>
-        <Header 
-          cartItems={cart} 
-          eliminarCarrito={handleDeleteFromCart}
-          increase={increase}
-          decrease={decrease}
-        />
-        <Routes>
-          <Route path="/" element={
-            <Home 
-              agregarCarrito={handleAddToCart} 
-              eliminarCarrito={handleDeleteFromCart} 
-              cart={cart} 
-              productos={productos} 
-              cargando={cargando}
-              increase={increase}
-              decrease={decrease}
-            />
+    <>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/acerca-de" element={<AcercaDe />} />
+        <Route path="/productos" element={<GaleriaDeProductos />} />
+        <Route path="/productos/:id" element={<DetallesProductos />} />
+        <Route path="/contacto" element={<Contactos />} />
+        <Route 
+          path="/admin" 
+          element={
+            <RutasProtegidas isAuthenticated={isAuthenticated}>
+              <AdminProvider><Admin /></AdminProvider>
+            </RutasProtegidas>
           } />
-          <Route path ="/acerca-de" element={<AcercaDe eliminarCarrito={handleDeleteFromCart} cart={cart}/>} />
-          <Route path='/productos' element={<GaleriaDeProductos agregarCarrito={handleAddToCart} eliminarCarrito={handleDeleteFromCart} cart={cart} productos={productos} cargando={cargando}/>} />
-
-          <Route path='/productos/:id' element={<DetallesProductos productos={productos} />} />
-
-
-          <Route path='/contacto' element={<Contactos eliminarCarrito={handleDeleteFromCart} cart={cart}/>} />
-
-
-<Route path='/admin' element={<RutasProtegidas isAuthenticated={isAuthenticated}><Admin/></RutasProtegidas>} />
-          <Route path='/login' element={<Login/>} />
-
-
-          <Route path='*' element={<NotFound/>} />
-        </Routes>
-      </>
-    </Router>
+        <Route path="/login" element={<Login />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </>
   )
 }
 
