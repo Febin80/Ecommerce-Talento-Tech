@@ -6,6 +6,7 @@ export const CartContext = createContext();
 export const CartProvider = ({ children }) => {
     const [productos, setProductos] = useState([]);
     const [cargando, setCargando] = useState(true);
+   const [busqueda, setBusqueda] = useState('');
     const [cart, setCart] = useState(() => {
         try {
             const cartFromStorage = localStorage.getItem('cart');
@@ -28,6 +29,10 @@ export const CartProvider = ({ children }) => {
                 .finally(() => setCargando(false));
         }, 5000); 
     }, []);
+
+    const productosFiltrados = productos.filter((producto) =>
+        producto.name.toLowerCase().includes(busqueda.toLowerCase())
+    );
 
     useEffect(() => {
         try {
@@ -91,6 +96,9 @@ export const CartProvider = ({ children }) => {
         increaseQuantity,
         decreaseQuantity,
         clearCart,
+        busqueda,
+        setBusqueda,
+        productosFiltrados,
     };
 
     return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
