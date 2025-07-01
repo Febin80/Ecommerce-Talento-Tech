@@ -68,8 +68,8 @@ Abre http://localhost:5173 (o el puerto que indique la terminal) en tu navegador
 
 Para acceder al panel de administración, utiliza las siguientes credenciales en la página de Login. Estos datos se encuentran en `public/data/users.json`.
 
--   **Email**: `admin@admin.com`
--   **Contraseña**: `admin123`
+-   **Email**: `example@example.com`
+-   **Contraseña**: `example`
 
 *(Nota: Estas son credenciales de ejemplo. Puedes modificarlas en el archivo `users.json`)*
 

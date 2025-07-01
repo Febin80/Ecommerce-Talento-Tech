@@ -1,104 +1,64 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-function FormularioProducto({ onAgregar }) {
-    const [producto, setProducto] = useState({
-        nombre: '',
-        precio: '',
-        stock: '',
-        imagen: '',
-        categoria: '',
+const FormularioProducto = ({ onAgregar }) => {
+  const [name, setName] = useState("");
+  const [precio, setPrecio] = useState("");
+  const [stock, setStock] = useState("");
+  const [img, setImg] = useState("");
+  const [category, setCategory] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!name || !precio || !stock || !img || !category) {
+      // Podrías agregar una notificación de error aquí
+      alert("Por favor, completa todos los campos.");
+      return;
+    }
+    onAgregar({
+      name,
+      precio: parseFloat(precio),
+      stock: parseInt(stock, 10),
+      img,
+      category,
     });
-    const [errores, setErrores] = useState({});
-    
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setProducto({ ...producto, [name]: value });
-    };
+    // Limpiar formulario
+    setName("");
+    setPrecio("");
+    setStock("");
+    setImg("");
+    setCategory("");
+  };
 
-
-    const validarFormulario = () => {
-        const nuevosErrores = {};
-        if (!producto.nombre.trim()) {
-            nuevosErrores.nombre = 'El nombre es obligatorio.';
-        }
-        if (!producto.precio || producto.precio <= 0) {
-            nuevosErrores.precio = 'El precio debe ser mayor a 0.';
-        }
-        if (!producto.categoria.trim() || producto.categoria.length < 5) {
-            nuevosErrores.categoria = 'La categoria debe tener al menos 5 caracteres.';
-        }
-        setErrores(nuevosErrores);
-        return Object.keys(nuevosErrores).length === 0;
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (!validarFormulario()) {
-            return;
-        }
-        onAgregar(producto); // Llamada a la función para agregar el producto
-        setProducto({
-            nombre: '',
-            precio: '',
-            stock: '',
-            imagen: '',
-            categoria: '',
-        }); // Limpiar el formulario
-    };
-
-    return (
+  return (
+    <div className="card bg-light">
+      <div className="card-body">
+        <h3 className="card-title mb-4">Agregar Nuevo Producto</h3>
         <form onSubmit={handleSubmit}>
-            <h2>Agregar Producto</h2>
-            <div>
-                <label>Nombre:</label>
-                <input
-                    type="text" name="nombre" value={producto.nombre} onChange={handleChange} required />
-                {errores.nombre && <p style={{ color: 'red' }}>{errores.nombre}</p>}
-            </div>
-            <div>
-                <label>Precio:</label>
-                <input type="number" name="precio" value={producto.precio} onChange={handleChange} required
-                    min="0" />
-                {errores.precio && <p style={{ color: 'red' }}>{errores.precio}</p>}
-            </div>
-
-            <div>
-                <label>Stock:</label>
-                <input
-                    type="number"
-                    name="stock"
-                    value={producto.stock || ''}
-                    onChange={handleChange}
-                    required
-                />
-                {errores.stock && <p style={{ color: 'red' }}>{errores.stock}</p>}
-            </div>
-            <div>
-                <label>Imagen URL:</label>
-                <input
-                    type="text"
-                    name="imagen"
-                    value={producto.imagen || ''}
-                    onChange={handleChange}
-                    required
-                />
-                {errores.imagen && <p style={{ color: 'red' }}>{errores.imagen}</p>}
-            </div>
-            <div>
-                <label>Categoría:</label>
-                <input
-                    type="text"
-                    name="categoria"
-                    value={producto.categoria || ''}
-                    onChange={handleChange}
-                    required
-                />
-                {errores.categoria && <p style={{ color: 'red' }}>{errores.categoria}</p>}
-            </div>
-
-            <button type="submit">Agregar Producto</button>
+          <div className="mb-3">
+            <label htmlFor="nombre" className="form-label">Nombre:</label>
+            <input type="text" className="form-control" id="nombre" value={name} onChange={(e) => setName(e.target.value)} required />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="precio" className="form-label">Precio:</label>
+            <input type="number" className="form-control" id="precio" value={precio} onChange={(e) => setPrecio(e.target.value)} required />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="stock" className="form-label">Stock:</label>
+            <input type="number" className="form-control" id="stock" value={stock} onChange={(e) => setStock(e.target.value)} required />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="img" className="form-label">Imagen URL:</label>
+            <input type="text" className="form-control" id="img" value={img} onChange={(e) => setImg(e.target.value)} required />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="categoria" className="form-label">Categoría:</label>
+            <input type="text" className="form-control" id="categoria" value={category} onChange={(e) => setCategory(e.target.value)} required />
+          </div>
+          <button type="submit" className="btn btn-primary w-100">Agregar Producto</button>
         </form>
-    );
-}
+      </div>
+    </div>
+  );
+};
 
 export default FormularioProducto;
